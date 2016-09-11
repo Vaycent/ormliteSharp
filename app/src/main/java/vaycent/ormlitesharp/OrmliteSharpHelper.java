@@ -18,10 +18,10 @@ import java.util.Map;
  * Created by Vaycent on 16/9/10.
  */
 
-public class OrmliteDatabaseHelper extends OrmLiteSqliteOpenHelper
+public class OrmliteSharpHelper extends OrmLiteSqliteOpenHelper
 {
     private static final String TAG="OrmliteDatabaseHelper";
-    private static OrmliteDatabaseHelper instance;
+    private static OrmliteSharpHelper instance;
 
     private Map<String, Dao> daos = new HashMap<String, Dao>();
 
@@ -38,7 +38,7 @@ public class OrmliteDatabaseHelper extends OrmLiteSqliteOpenHelper
     }
 
 
-    private OrmliteDatabaseHelper(Context context, String dbName, int dbVersion) {
+    private OrmliteSharpHelper(Context context, String dbName, int dbVersion) {
         super(context, dbName, null, dbVersion);
     }
 
@@ -74,16 +74,16 @@ public class OrmliteDatabaseHelper extends OrmLiteSqliteOpenHelper
     }
 
 
-    public static synchronized OrmliteDatabaseHelper getHelper(Context context) {
+    public static synchronized OrmliteSharpHelper getHelper(Context context) {
         if (instance == null)
         {
-            synchronized (OrmliteDatabaseHelper.class)
+            synchronized (OrmliteSharpHelper.class)
             {
                 if (instance == null)
                     if(dbName.equalsIgnoreCase("")||dbVersion==0){
                         Log.e(TAG,"You should use init() function to setup dbName and dbVersion before you getHelper");
                     }else{
-                        instance = new OrmliteDatabaseHelper(context,dbName,dbVersion);
+                        instance = new OrmliteSharpHelper(context,dbName,dbVersion);
                     }
             }
         }
