@@ -27,7 +27,6 @@ public class OrmliteSharp {
         this.classList = cl;
 
         OrmliteSharpHelper.initParameter(dbName, dbVersion, classList);
-        osHelper = OrmliteSharpHelper.getHelper(context);
     }
 
     public Dao getOS_Dao(Class daoClass) {
