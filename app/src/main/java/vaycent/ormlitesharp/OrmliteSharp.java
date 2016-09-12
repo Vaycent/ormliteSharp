@@ -30,7 +30,7 @@ public class OrmliteSharp {
         osHelper = OrmliteSharpHelper.getHelper(context);
     }
 
-    private Dao getOS_Dao(Class daoClass) {
+    public Dao getOS_Dao(Class daoClass) {
         osHelper = OrmliteSharpHelper.getHelper(context);
         Dao dao = null;
         try {
