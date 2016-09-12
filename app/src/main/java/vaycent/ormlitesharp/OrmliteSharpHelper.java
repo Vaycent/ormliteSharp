@@ -84,6 +84,7 @@ public class OrmliteSharpHelper extends OrmLiteSqliteOpenHelper
             for(int i=0;i<classList.size();i++){
                 Class classObj=classList.get(i).getClass();
                 TableUtils.createTable(connectionSource, classObj);
+                System.out.println("classObj name:"+classObj.getSimpleName());
             }
         } catch (SQLException e)
         {
