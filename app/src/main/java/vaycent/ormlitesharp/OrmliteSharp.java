@@ -14,52 +14,49 @@ public class OrmliteSharp {
 
     private ArrayList<Class> classList;
     private String dbName = "";
-    private int dbVersion= 0;
+    private int dbVersion = 0;
     private Context context;
 
     private OrmliteSharpHelper osHelper;
 
 
+    public OrmliteSharp(Context ct, String name, int version, ArrayList<Class> cl) {
+        this.context = ct;
+        this.dbName = name;
+        this.dbVersion = version;
+        this.classList = cl;
 
-    public OrmliteSharp(Context ct, String name, int version, ArrayList<Class> cl){
-        this.context=ct;
-        this.dbName=name;
-        this.dbVersion=version;
-        this.classList=cl;
-
-        OrmliteSharpHelper.initParameter(dbName,dbVersion,classList);
-
+        OrmliteSharpHelper.initParameter(dbName, dbVersion, classList);
+        osHelper = OrmliteSharpHelper.getHelper(context);
     }
 
-    private Dao getOS_Dao(Class daoClass){
+    private Dao getOS_Dao(Class daoClass) {
         osHelper = OrmliteSharpHelper.getHelper(context);
-        Dao dao=null;
-        try{
-            dao=osHelper.getDao(daoClass);
-        }catch (SQLException e)
-        {
+        Dao dao = null;
+        try {
+            dao = osHelper.getDao(daoClass);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return dao;
     }
 
 
-    public Context getContext(){
+    public Context getContext() {
         return context;
     }
 
-    public String getDbName(){
+    public String getDbName() {
         return dbName;
     }
 
-    public int getDbVersion(){
+    public int getDbVersion() {
         return dbVersion;
     }
 
-    public ArrayList<Class> getClassList(){
+    public ArrayList<Class> getClassList() {
         return classList;
     }
-
 
 
 }

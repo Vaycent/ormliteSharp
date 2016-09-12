@@ -31,20 +31,51 @@ public class OrmliteSharpHelper extends OrmLiteSqliteOpenHelper
 
 
 
-    public void init(String dbName, int dbVersion, ArrayList<Class> classList){
-        this.classList=classList;
-        this.dbName=dbName;
-        this.dbVersion=dbVersion;
-    }
-
-
-    private OrmliteSharpHelper() {
-
+    public static void initParameter(String name, int version, ArrayList<Class> cl){
+        classList=cl;
+        dbName=name;
+        dbVersion=version;
     }
 
     private OrmliteSharpHelper(Context context, String dbName, int dbVersion) {
         super(context, dbName, null, dbVersion);
     }
+
+
+    public static synchronized OrmliteSharpHelper getHelper(Context context) {
+        if (instance == null)
+        {
+            synchronized (OrmliteSharpHelper.class)
+            {
+                if (instance == null)
+                    if(dbName.equalsIgnoreCase("")||dbVersion==0){
+                        Log.e(TAG,"You should use initParameter() function to setup dbName and dbVersion before you getHelper");
+                    }else{
+                        instance = new OrmliteSharpHelper(context,dbName,dbVersion);
+                    }
+            }
+        }
+        return instance;
+    }
+
+    public synchronized Dao getDao(Class clazz) throws SQLException
+    {
+        Dao dao = null;
+        String className = clazz.getSimpleName();
+
+        if (daos.containsKey(className))
+        {
+            dao = daos.get(className);
+        }
+        if (dao == null)
+        {
+            dao = super.getDao(clazz);
+            daos.put(className, dao);
+        }
+        return dao;
+    }
+
+    /************************  @Override *************************/
 
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
@@ -77,24 +108,6 @@ public class OrmliteSharpHelper extends OrmLiteSqliteOpenHelper
         }
     }
 
-
-    public static synchronized OrmliteSharpHelper getHelper(Context context) {
-        if (instance == null)
-        {
-            synchronized (OrmliteSharpHelper.class)
-            {
-                if (instance == null)
-                    if(dbName.equalsIgnoreCase("")||dbVersion==0){
-                        Log.e(TAG,"You should use init() function to setup dbName and dbVersion before you getHelper");
-                    }else{
-                        instance = new OrmliteSharpHelper(context,dbName,dbVersion);
-                    }
-            }
-        }
-        return instance;
-    }
-
-
     @Override
     public void close()
     {
@@ -106,24 +119,5 @@ public class OrmliteSharpHelper extends OrmLiteSqliteOpenHelper
             dao = null;
         }
     }
-
-    public synchronized Dao getDao(Class clazz) throws SQLException
-    {
-        Dao dao = null;
-        String className = clazz.getSimpleName();
-
-        if (daos.containsKey(className))
-        {
-            dao = daos.get(className);
-        }
-        if (dao == null)
-        {
-            dao = super.getDao(clazz);
-            daos.put(className, dao);
-        }
-        return dao;
-    }
-
-
 
 }
