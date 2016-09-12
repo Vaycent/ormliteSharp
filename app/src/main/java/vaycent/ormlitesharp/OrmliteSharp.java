@@ -29,12 +29,14 @@ public class OrmliteSharp {
         OrmliteSharpHelper.initParameter(dbName, dbVersion, classList);
     }
 
-    public void synchronizedDB(){
+    public OrmliteSharpHelper synchronizedDB(){
         osHelper = OrmliteSharpHelper.getHelper(context);
+        return osHelper;
     }
 
-    public Dao getOS_Dao(Class daoClass) {
+    public Dao getOS_Dao(OrmliteSharpHelper osh, Class daoClass) {
         Dao dao = null;
+        osHelper=osh;
         try {
             dao = osHelper.getDao(daoClass);
         } catch (SQLException e) {
