@@ -12,7 +12,8 @@ import java.util.ArrayList;
  */
 public class OrmliteSharp {
 
-    private ArrayList<Class> classList;
+
+    private ArrayListClass<? extends Class> classList;
     private String dbName = "";
     private int dbVersion = 0;
     private Context context;
@@ -20,7 +21,7 @@ public class OrmliteSharp {
     private OrmliteSharpHelper osHelper;
 
 
-    public OrmliteSharp(Context ct, String name, int version, ArrayList<Class> cl) {
+    public OrmliteSharp(Context ct, String name, int version, ArrayListClass<? extends Class> cl) {
         this.context = ct;
         this.dbName = name;
         this.dbVersion = version;
@@ -58,9 +59,6 @@ public class OrmliteSharp {
         return dbVersion;
     }
 
-    public ArrayList<Class> getClassList() {
-        return classList;
-    }
 
 
 }

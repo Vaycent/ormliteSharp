@@ -25,13 +25,13 @@ public class OrmliteSharpHelper extends OrmLiteSqliteOpenHelper
 
     private Map<String, Dao> daos = new HashMap<String, Dao>();
 
-    private static ArrayList<Class> classList;
+    private static ArrayListClass<? extends Class> classList;
     private static String dbName = "";
     private static int dbVersion= 0;
 
 
 
-    public static void initParameter(String name, int version, ArrayList<Class> cl){
+    public static void initParameter(String name, int version, ArrayListClass<? extends Class> cl){
         classList=cl;
         dbName=name;
         dbVersion=version;
@@ -62,6 +62,8 @@ public class OrmliteSharpHelper extends OrmLiteSqliteOpenHelper
     {
         Dao dao = null;
         String className = clazz.getSimpleName();
+        System.out.println("daos size :"+daos.size());
+
 
         if (daos.containsKey(className))
         {
@@ -81,9 +83,8 @@ public class OrmliteSharpHelper extends OrmLiteSqliteOpenHelper
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try
         {
-            for(int i=0;i<classList.size();i++){
-                Class classObj=classList.get(i).getClass();
-                TableUtils.createTable(connectionSource, classObj);
+            for(int i=0;i<classList.getSize();i++){
+                TableUtils.createTable(connectionSource, classList.getVar(i));
             }
         } catch (SQLException e)
         {
@@ -97,8 +98,8 @@ public class OrmliteSharpHelper extends OrmLiteSqliteOpenHelper
     {
         try
         {
-            for(int i=0;i<classList.size();i++){
-                Class classObj=classList.get(i).getClass();
+            for(int i=0;i<classList.getSize();i++){
+                Class classObj=classList.getVar(i).getClass();
                 TableUtils.dropTable(connectionSource, classObj, true);
             }
             onCreate(database, connectionSource);
