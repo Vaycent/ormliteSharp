@@ -10,7 +10,6 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,10 +17,10 @@ import java.util.Map;
  * Created by Vaycent on 16/9/10.
  */
 
-public class OrmliteSharpHelper extends OrmLiteSqliteOpenHelper
+public class OrmliteDB extends OrmLiteSqliteOpenHelper
 {
     private static final String TAG="OrmliteDatabaseHelper";
-    private static OrmliteSharpHelper instance;
+    private static OrmliteDB instance;
 
     private Map<String, Dao> daos = new HashMap<String, Dao>();
 
@@ -37,29 +36,28 @@ public class OrmliteSharpHelper extends OrmLiteSqliteOpenHelper
         dbVersion=version;
     }
 
-    private OrmliteSharpHelper(Context context, String dbName, int dbVersion) {
+    private OrmliteDB(Context context, String dbName, int dbVersion) {
         super(context, dbName, null, dbVersion);
     }
 
 
-    public static synchronized OrmliteSharpHelper getHelper(Context context) {
+    public static synchronized OrmliteDB getHelper(Context context) {
         if (instance == null)
         {
-            synchronized (OrmliteSharpHelper.class)
+            synchronized (OrmliteDB.class)
             {
                 if (instance == null)
                     if(dbName.equalsIgnoreCase("")||dbVersion==0){
                         Log.e(TAG,"You should use initParameter() function to setup dbName and dbVersion before you getHelper");
                     }else{
-                        instance = new OrmliteSharpHelper(context,dbName,dbVersion);
+                        instance = new OrmliteDB(context,dbName,dbVersion);
                     }
             }
         }
         return instance;
     }
 
-    public synchronized Dao getDao(Class clazz) throws SQLException
-    {
+    public synchronized Dao getDao(Class clazz) throws SQLException {
         Dao dao = null;
         String className = clazz.getSimpleName();
         System.out.println("daos size :"+daos.size());
@@ -94,8 +92,7 @@ public class OrmliteSharpHelper extends OrmLiteSqliteOpenHelper
 
     @Override
     public void onUpgrade(SQLiteDatabase database,
-                          ConnectionSource connectionSource, int oldVersion, int newVersion)
-    {
+                          ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try
         {
             for(int i=0;i<classList.getSize();i++){
@@ -110,8 +107,7 @@ public class OrmliteSharpHelper extends OrmLiteSqliteOpenHelper
     }
 
     @Override
-    public void close()
-    {
+    public void close() {
         super.close();
 
         for (String key : daos.keySet())
