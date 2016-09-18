@@ -11,19 +11,28 @@ import java.sql.SQLException;
  */
 public class OrmliteSharp {
     private OrmliteDB ormliteDB;
+    private DbObjectClass dbObjClass;
 
     private Context context;
     private String dbName = "";
     private int dbVersion = 0;
     private ArrayListClass<? extends Class> classList;
 
+    /** New */
+    public OrmliteSharp(Context ct, String name, int version, ArrayListClass<? extends Class> cl) {
+        this.context = ct;
+        this.dbName = name;
+        this.dbVersion = version;
+        this.classList = cl;
 
+        OrmliteDB.initParameter(dbName, dbVersion, classList);
+    }
 
     /** DataBase Control */
-    public void addToDB(DbObjectClass dbObjClass, Object dbObj){
+    public void addToDB(Class classObj, Object dbObj){
         try{
             OrmliteDB ormliteDB = OrmliteDB.getHelper(context);
-            Dao myDao= ormliteDB.getDao(dbObjClass.getClassData());
+            Dao myDao= ormliteDB.getDao(classObj);
             myDao.create(dbObj);
         }catch (SQLException e){
             e.printStackTrace();
@@ -60,14 +69,6 @@ public class OrmliteSharp {
     }
 
     /** DataBase Parameter */
-    public OrmliteSharp(Context ct, String name, int version, ArrayListClass<? extends Class> cl) {
-        this.context = ct;
-        this.dbName = name;
-        this.dbVersion = version;
-        this.classList = cl;
-
-        OrmliteDB.initParameter(dbName, dbVersion, classList);
-    }
     public Context getContext() {
         return context;
     }
@@ -80,8 +81,5 @@ public class OrmliteSharp {
     public ArrayListClass<? extends Class> getClassList() {
         return classList;
     }
-
-
-
 
 }

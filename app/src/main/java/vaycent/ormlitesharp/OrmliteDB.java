@@ -24,9 +24,9 @@ public class OrmliteDB extends OrmLiteSqliteOpenHelper
 
     private Map<String, Dao> daos = new HashMap<String, Dao>();
 
-    private static ArrayListClass<? extends Class> classList;
     private static String dbName = "";
     private static int dbVersion= 0;
+    private static ArrayListClass<? extends Class> classList;
 
 
 
