@@ -40,7 +40,6 @@ public class OrmliteDB extends OrmLiteSqliteOpenHelper
         super(context, dbName, null, dbVersion);
     }
 
-
     public static synchronized OrmliteDB getHelper(Context context) {
         if (instance == null)
         {
