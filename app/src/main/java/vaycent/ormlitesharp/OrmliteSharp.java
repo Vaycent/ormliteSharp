@@ -48,12 +48,14 @@ public class OrmliteSharp {
             e.printStackTrace();
         }
     }
-    public Object selectById(DbObjectClass dbObjClass, int id){
-        Object dbObj=null;
+    public DbObjectClass selectById(DbObjectClass dbObjClass, int id){
+
+        DbObjectClass dbObj=new DbObjectClass();
+
         try{
             OrmliteDB ormliteDB = OrmliteDB.getHelper(context);
             Dao myDao= ormliteDB.getDao(dbObjClass.getClassData());
-            dbObj=myDao.queryForId(id);
+            dbObj.setSelectFromDB(myDao.queryForId(id));
         }catch (SQLException e){
             e.printStackTrace();
         }
