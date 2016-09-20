@@ -5,6 +5,7 @@ import android.content.Context;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 
 /**
@@ -69,6 +70,27 @@ public class OrmliteSharp {
             e.printStackTrace();
         }
     }
+
+    public void deleteTable(DbObjectClass dbObjClass){
+        try{
+            OrmliteDB ormliteDB = OrmliteDB.getHelper(context);
+            Dao myDao= ormliteDB.getDao(dbObjClass.getClassData());
+            myDao.delete(myDao.queryForAll());
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public List selectAll(DbObjectClass dbObjClass){
+        try{
+            OrmliteDB ormliteDB = OrmliteDB.getHelper(context);
+            Dao myDao= ormliteDB.getDao(dbObjClass.getClassData());
+            return myDao.queryForAll();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     /** DataBase Parameter */
     public Context getContext() {
