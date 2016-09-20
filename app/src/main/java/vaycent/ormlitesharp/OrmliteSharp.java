@@ -6,6 +6,7 @@ import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 
+
 /**
  * Created by Vaycent on 16/9/12.
  */
@@ -48,15 +49,16 @@ public class OrmliteSharp {
             e.printStackTrace();
         }
     }
-    public Object selectById(DbObjectClass dbObjClass, int id, Object resultObj){
+    public Object selectBPById(DbObjectClass dbObjClass, int id){
         try{
             OrmliteDB ormliteDB = OrmliteDB.getHelper(context);
             Dao myDao= ormliteDB.getDao(dbObjClass.getClassData());
-            resultObj=myDao.queryForId(id);
+            Object obj=myDao.queryForId(id);
+            return obj;
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return resultObj;
+        return null;
     }
     public void updateToDB(DbObjectClass dbObjClass, Object dbObj){
         try{
