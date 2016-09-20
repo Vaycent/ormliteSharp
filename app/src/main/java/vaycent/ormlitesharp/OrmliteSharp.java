@@ -10,7 +10,7 @@ import java.sql.SQLException;
  * Created by Vaycent on 16/9/12.
  */
 public class OrmliteSharp {
-    
+
     private OrmliteDB ormliteDB;
     private DbObjectClass dbObjClass;
 
