@@ -53,8 +53,8 @@ public class OrmliteSharp {
         try{
             OrmliteDB ormliteDB = OrmliteDB.getHelper(context);
             Dao myDao= ormliteDB.getDao(dbObjClass.getClassData());
-            Object obj=myDao.queryForId(id);
-            return obj;
+            Object resultObj=myDao.queryForId(id);
+            return resultObj;
         }catch (SQLException e){
             e.printStackTrace();
         }
