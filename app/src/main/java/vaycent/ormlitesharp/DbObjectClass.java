@@ -12,13 +12,5 @@ public class DbObjectClass<T extends Class> {
     public T getClassData() {
         return classData;
     }
-
-    public void setSelectFromDB(Object obj){
-        classData = (T) obj;
-    }
-
-    public T getSelectFromDB(){
-        return classData;
-    }
 }
 
