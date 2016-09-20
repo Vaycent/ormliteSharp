@@ -43,7 +43,7 @@ public class OrmliteSharp {
         try{
             OrmliteDB ormliteDB = OrmliteDB.getHelper(context);
             Dao myDao= ormliteDB.getDao(dbObjClass.getClassData());
-            myDao.delete(id);
+            myDao.deleteById(id);
         }catch (SQLException e){
             e.printStackTrace();
         }
